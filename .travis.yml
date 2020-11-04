@@ -64,6 +64,56 @@ jobs:
       env: TEST_TYPE=optional SELENIUM_BROWSER=firefox BUILD_ENV=build.prod
       before_script: *before_script_reference
       script: *optional
+      
+      # Adding jobs for ppc64le architecture
+      - stage: unit
+      name: "Unit"
+      arch: ppc64le
+      before_script:
+        - npm install
+      script: npm run test-headless
+
+    - stage: test
+      arch: ppc64le
+      name: "E2E Chrome"
+      env: SELENIUM_BROWSER=chrome BUILD_ENV=build.prod
+      before_script: *before_script_reference
+      script: *ignore_optional
+
+    - stage: test
+      arch: ppc64le
+      name: "E2E Firefox"
+      env: SELENIUM_BROWSER=firefox BUILD_ENV=build.prod
+      before_script: *before_script_reference
+      script: *ignore_optional
+
+    - stage: test
+      arch: ppc64le
+      name: "E2E Chrome nonmin"
+      env: SELENIUM_BROWSER=chrome BUILD_ENV=build.nonmin.travis
+      before_script: *before_script_reference
+      script: *ignore_optional
+
+    - stage: test
+      arch: ppc64le
+      name: "E2E Firefox nonmin"
+      env: SELENIUM_BROWSER=firefox BUILD_ENV=build.nonmin.travis
+      before_script: *before_script_reference
+      script: *ignore_optional
+
+    - stage: test
+      arch: ppc64le
+      name: "E2E Chrome Optional"
+      env: TEST_TYPE=optional SELENIUM_BROWSER=chrome BUILD_ENV=build.prod
+      before_script: *before_script_reference
+      script: *optional
+
+    - stage: test
+      arch: ppc64le
+      name: "E2E Firefox Optional"
+      env: TEST_TYPE=optional SELENIUM_BROWSER=firefox BUILD_ENV=build.prod
+      before_script: *before_script_reference
+      script: *optional
 
   allow_failures:
     - env: TEST_TYPE=optional SELENIUM_BROWSER=chrome BUILD_ENV=build.prod
